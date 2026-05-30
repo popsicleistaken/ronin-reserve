@@ -3,21 +3,33 @@ import BookingsDashboard, { type Booking } from "./BookingsDashboard";
 
 export const metadata = { title: "Dashboard | Ronin Admin" };
 
+function bangkokToday() {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Bangkok" }).format(new Date());
+}
+
 export default async function AdminPage({
   searchParams,
 }: {
   searchParams: { date?: string };
 }) {
   const supabase = createServerClient();
-  const today = new Date().toISOString().split("T")[0];
-  const date = searchParams.date ?? today;
+  const today = bangkokToday();
+  const filterDate = searchParams.date ?? null; // null = show all upcoming
 
-  const [{ data: bookings }, { data: branches }] = await Promise.all([
-    supabase
-      .from("bookings")
-      .select("id, booking_reference, booking_date, booking_time, party_size, customer_name, customer_phone, status, branches(name, slug)")
-      .eq("booking_date", date)
-      .order("booking_time"),
+  const [bookingsQuery, { data: branches }] = await Promise.all([
+    filterDate
+      ? supabase
+          .from("bookings")
+          .select("id, booking_reference, booking_date, booking_time, party_size, customer_name, customer_phone, status, branches(name, slug)")
+          .eq("booking_date", filterDate)
+          .order("booking_time")
+      : supabase
+          .from("bookings")
+          .select("id, booking_reference, booking_date, booking_time, party_size, customer_name, customer_phone, status, branches(name, slug)")
+          .gte("booking_date", today)
+          .order("booking_date")
+          .order("booking_time")
+          .limit(200),
     supabase
       .from("branches")
       .select("name, slug")
@@ -25,7 +37,8 @@ export default async function AdminPage({
       .order("name"),
   ]);
 
-  const list = bookings ?? [];
+  const list = (bookingsQuery.data ?? []) as unknown as Booking[];
+
   const stats = {
     total: list.length,
     confirmed: list.filter((b) => b.status === "confirmed").length,
@@ -35,9 +48,10 @@ export default async function AdminPage({
 
   return (
     <BookingsDashboard
-      bookings={list as unknown as Booking[]}
+      bookings={list}
       stats={stats}
-      date={date}
+      today={today}
+      filterDate={filterDate}
       branches={branches ?? []}
     />
   );
