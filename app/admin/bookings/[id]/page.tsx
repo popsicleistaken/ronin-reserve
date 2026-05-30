@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { createServerClient } from "@/lib/supabase";
 import BookingDetailClient from "./BookingDetailClient";
 
+export const dynamic = "force-dynamic";
 export const metadata = { title: "Booking Detail | Ronin Admin" };
 
 export default async function BookingDetailPage({

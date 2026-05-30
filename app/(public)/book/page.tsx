@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { supabase } from "@/lib/supabase";
 import BookingForm from "./BookingForm";
 
+export const dynamic = "force-dynamic";
 export const metadata = { title: "จองโต๊ะ | Ronin Reserve" };
 
 export default async function BookPage() {

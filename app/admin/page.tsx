@@ -1,6 +1,7 @@
 import { createServerClient } from "@/lib/supabase";
 import BookingsDashboard, { type Booking } from "./BookingsDashboard";
 
+export const dynamic = "force-dynamic";
 export const metadata = { title: "Dashboard | Ronin Admin" };
 
 function bangkokToday() {
