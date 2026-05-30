@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ronin Reserve - Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-tint": "#3b6844",
+                      "inverse-primary": "#a1d2a6",
+                      "surface-container-highest": "#ebe1da",
+                      "on-tertiary": "#ffffff",
+                      "outline-variant": "#c1c9be",
+                      "inverse-surface": "#352f2b",
+                      "secondary-fixed": "#ffdbca",
+                      "on-tertiary-fixed": "#2c1600",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#e2d8d2",
+                      "surface-bright": "#fff8f5",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed-variant": "#5e4123",
+                      "tertiary-fixed-dim": "#e9bf98",
+                      "outline": "#727970",
+                      "on-secondary-container": "#743200",
+                      "primary": "#396542",
+                      "surface-container-low": "#fcf2eb",
+                      "on-secondary": "#ffffff",
+                      "on-surface-variant": "#414941",
+                      "surface-container-high": "#f0e6e0",
+                      "on-secondary-fixed": "#331200",
+                      "error-container": "#ffdad6",
+                      "surface-container": "#f6ece5",
+                      "on-secondary-fixed-variant": "#773300",
+                      "primary-container": "#517f59",
+                      "surface-container-lowest": "#ffffff",
+                      "surface": "#fff8f5",
+                      "secondary-container": "#fe9b61",
+                      "on-primary-fixed": "#00210a",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed": "#ffdcbd",
+                      "on-surface": "#1f1b17",
+                      "on-primary-fixed-variant": "#23502e",
+                      "background": "#fff8f5",
+                      "secondary": "#964915",
+                      "tertiary-container": "#906e4c",
+                      "on-primary": "#ffffff",
+                      "on-primary-container": "#f7fff3",
+                      "inverse-on-surface": "#f9efe8",
+                      "primary-fixed": "#bdefc1",
+                      "tertiary": "#755636",
+                      "primary-fixed-dim": "#a1d2a6",
+                      "on-background": "#1f1b17",
+                      "on-tertiary-container": "#fffbff",
+                      "surface-variant": "#ebe1da",
+                      "secondary-fixed-dim": "#ffb68e"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "fontFamily": {
+                      "headline": [
+                              "Playfair Display"
+                      ],
+                      "display": [
+                              "Playfair Display"
+                      ],
+                      "body": [
+                              "Montserrat"
+                      ],
+                      "label": [
+                              "Montserrat"
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased flex h-screen overflow-hidden">
+<!-- SideNavBar (Shared Component) -->
+<nav class="hidden md:flex flex-col h-screen p-4 gap-2 bg-surface-container docked left-0 w-64 border-r border-outline-variant">
+<!-- Brand Header -->
+<div class="mb-8 px-4 pt-4 flex flex-col items-center justify-center">
+<h1 class="font-headline text-subhead-lg text-primary text-center">Ronin Admin</h1>
+<p class="font-body text-label-sm text-on-surface-variant text-center mt-1">Management Portal</p>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-2">
+<!-- Active: Dashboard -->
+<a class="bg-secondary-container text-on-secondary-container rounded-lg font-semibold flex items-center gap-3 px-4 py-3 transition-all scale-95 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" data-weight="fill" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-body text-label-sm">Dashboard</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-body text-label-sm" href="#">
+<span class="material-symbols-outlined" data-icon="event_seat">event_seat</span>
+<span>Bookings</span>
+</a>
+<a class="text-on-surface-variant hover:bg-surface-container-highest flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-body text-label-sm" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<!-- Footer / Logout -->
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<a class="text-on-surface-variant hover:bg-surface-container-highest flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-body text-label-sm" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-y-auto bg-background">
+<!-- Header -->
+<header class="flex justify-between items-center px-8 py-6 bg-surface border-b border-outline-variant sticky top-0 z-10">
+<div>
+<h2 class="font-headline text-headline-lg text-on-surface">Dashboard</h2>
+<p class="text-on-surface-variant text-body-md mt-1">Overview of today's reservations and activities.</p>
+</div>
+<div class="flex items-center gap-4">
+<!-- Search Bar -->
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="pl-10 pr-4 py-2 border border-outline-variant bg-surface-container-lowest rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-body-md text-on-surface placeholder:text-outline w-64" placeholder="Search name or phone..." type="text"/>
+</div>
+<!-- Admin Profile Avatar -->
+<div class="h-10 w-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant flex items-center justify-center cursor-pointer">
+<img alt="Admin Profile" class="h-full w-full object-cover" data-alt="A professional headshot of a restaurant manager in a softly lit, modern Italian kitchen environment. The setting features warm lighting reflecting off stainless steel and natural wood textures. The aesthetic is corporate yet hospitable, aligning with a premium dining brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6kxMA13ZwgZ20sp4O1XnB8uSfscP_b1x2d8kkXwIr92OGY_CLJ9RCCee7lSlROd4xOTTOPgflMQrM-WZ1stldELp-wOzhxnoY4N65k8kAnrwl0ltpmhbn9TQILZ-L5Zb6yt3iUeov9HeZEoFPin3UOsHpLZgEU674jjYeIR6JRBTP1HsUrumcxaQr2e2T2JibsCIbq8_UwIdKnhM424gBywbkdkj7TsLWokBiKXrG-6wsmu3mfWYbwYbMkNfoUmuG8FVWaX0hIyAb"/>
+</div>
+</div>
+</header>
+<div class="p-8 max-w-[1400px] mx-auto w-full flex-1">
+<!-- Summary Cards (Bento-ish Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<!-- Today's Bookings -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-sm flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary-container text-on-primary-container rounded-lg">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<span class="text-primary font-semibold text-label-sm">+12% vs last week</span>
+</div>
+<h3 class="text-on-surface-variant text-body-md mb-1">Today's Bookings</h3>
+<p class="font-headline text-headline-lg text-on-surface">142</p>
+</div>
+<!-- Confirmed -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-sm flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-surface-container-high text-on-surface rounded-lg">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</div>
+<h3 class="text-on-surface-variant text-body-md mb-1">Confirmed</h3>
+<p class="font-headline text-headline-lg text-on-surface">86</p>
+</div>
+<!-- Seated -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant shadow-sm flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-secondary-container text-on-secondary-container rounded-lg">
+<span class="material-symbols-outlined">restaurant</span>
+</div>
+</div>
+<h3 class="text-on-surface-variant text-body-md mb-1">Seated</h3>
+<p class="font-headline text-headline-lg text-on-surface">45</p>
+</div>
+<!-- Cancelled -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-error-container shadow-sm flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-error-container text-on-error-container rounded-lg">
+<span class="material-symbols-outlined">cancel</span>
+</div>
+</div>
+<h3 class="text-on-surface-variant text-body-md mb-1">Cancelled</h3>
+<p class="font-headline text-headline-lg text-error">11</p>
+</div>
+</div>
+<!-- Main Content Area: Bookings Table & Filters -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col">
+<!-- Toolbar / Filters -->
+<div class="p-4 border-b border-outline-variant flex flex-col sm:flex-row justify-between items-center gap-4 bg-surface-container-lowest">
+<h3 class="font-headline text-subhead-lg text-on-surface">Upcoming Reservations</h3>
+<div class="flex flex-wrap items-center gap-3">
+<!-- Date Filter -->
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant text-on-surface py-2 pl-4 pr-10 rounded-lg focus:outline-none focus:border-primary text-label-sm font-semibold cursor-pointer">
+<option>Today</option>
+<option>Tomorrow</option>
+<option>This Week</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" style="font-size: 18px;">expand_more</span>
+</div>
+<!-- Branch Filter -->
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant text-on-surface py-2 pl-4 pr-10 rounded-lg focus:outline-none focus:border-primary text-label-sm font-semibold cursor-pointer">
+<option>All Branches</option>
+<option>Downtown (Main)</option>
+<option>Westside</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" style="font-size: 18px;">expand_more</span>
+</div>
+<!-- Status Filter -->
+<div class="relative">
+<select class="appearance-none bg-surface border border-outline-variant text-on-surface py-2 pl-4 pr-10 rounded-lg focus:outline-none focus:border-primary text-label-sm font-semibold cursor-pointer">
+<option>All Statuses</option>
+<option>Confirmed</option>
+<option>Seated</option>
+<option>Cancelled</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none" style="font-size: 18px;">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="p-4 font-body text-label-sm text-on-surface-variant uppercase tracking-wider">Time</th>
+<th class="p-4 font-body text-label-sm text-on-surface-variant uppercase tracking-wider">Customer</th>
+<th class="p-4 font-body text-label-sm text-on-surface-variant uppercase tracking-wider">Branch</th>
+<th class="p-4 font-body text-label-sm text-on-surface-variant uppercase tracking-wider">Guests</th>
+<th class="p-4 font-body text-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
+<th class="p-4 font-body text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4 font-body text-body-md text-on-surface font-semibold">18:30</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
+                                            MR
+                                        </div>
+<div>
+<p class="font-body text-body-md text-on-surface font-semibold">Marco Rossi</p>
+<p class="font-body text-label-sm text-on-surface-variant">+1 (555) 019-2834</p>
+</div>
+</div>
+</td>
+<td class="p-4 font-body text-body-md text-on-surface-variant">Downtown</td>
+<td class="p-4 font-body text-body-md text-on-surface">4</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-container text-on-primary-container">
+                                        Confirmed
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-primary hover:text-surface-tint font-semibold text-sm transition-colors">View</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4 font-body text-body-md text-on-surface font-semibold">18:45</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-sm">
+                                            SJ
+                                        </div>
+<div>
+<p class="font-body text-body-md text-on-surface font-semibold">Sarah Jenkins</p>
+<p class="font-body text-label-sm text-on-surface-variant">+1 (555) 837-9921</p>
+</div>
+</div>
+</td>
+<td class="p-4 font-body text-body-md text-on-surface-variant">Westside</td>
+<td class="p-4 font-body text-body-md text-on-surface">2</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-secondary-container text-on-secondary-container">
+                                        Seated
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-primary hover:text-surface-tint font-semibold text-sm transition-colors">View</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4 font-body text-body-md text-on-surface font-semibold">19:00</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-sm">
+                                            DB
+                                        </div>
+<div>
+<p class="font-body text-body-md text-on-surface font-semibold">David Bowen</p>
+<p class="font-body text-label-sm text-on-surface-variant">+1 (555) 334-1109</p>
+</div>
+</div>
+</td>
+<td class="p-4 font-body text-body-md text-on-surface-variant">Downtown</td>
+<td class="p-4 font-body text-body-md text-on-surface">6</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-error-container text-on-error-container">
+                                        Cancelled
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-primary hover:text-surface-tint font-semibold text-sm transition-colors">View</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4 font-body text-body-md text-on-surface font-semibold">19:15</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-sm">
+                                            EL
+                                        </div>
+<div>
+<p class="font-body text-body-md text-on-surface font-semibold">Elena Lukin</p>
+<p class="font-body text-label-sm text-on-surface-variant">+1 (555) 772-5490</p>
+</div>
+</div>
+</td>
+<td class="p-4 font-body text-body-md text-on-surface-variant">Downtown</td>
+<td class="p-4 font-body text-body-md text-on-surface">3</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-variant text-on-surface-variant border border-outline-variant">
+                                        Completed
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-primary hover:text-surface-tint font-semibold text-sm transition-colors">View</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-lowest transition-colors group">
+<td class="p-4 font-body text-body-md text-on-surface font-semibold">19:30</td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-sm">
+                                            TW
+                                        </div>
+<div>
+<p class="font-body text-body-md text-on-surface font-semibold">Thomas Wright</p>
+<p class="font-body text-label-sm text-on-surface-variant">+1 (555) 228-4001</p>
+</div>
+</div>
+</td>
+<td class="p-4 font-body text-body-md text-on-surface-variant">Westside</td>
+<td class="p-4 font-body text-body-md text-on-surface">2</td>
+<td class="p-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#ffb68e] text-[#743200]"> <!-- Using raw color approximation for No-show as requested in prompt despite DS limits, falling back to secondary-fixed-dim/on-secondary-container -->
+                                        No-show
+                                    </span>
+</td>
+<td class="p-4 text-right">
+<button class="text-primary hover:text-surface-tint font-semibold text-sm transition-colors">View</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="p-4 border-t border-outline-variant flex items-center justify-between bg-surface-container-low">
+<p class="text-label-sm text-on-surface-variant">Showing 1 to 5 of 142 entries</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-highest transition-colors disabled:opacity-50" disabled="">Prev</button>
+<button class="px-3 py-1 rounded border border-outline-variant text-on-surface-variant hover:bg-surface-container-highest transition-colors">Next</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>
